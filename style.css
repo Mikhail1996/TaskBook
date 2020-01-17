@@ -1,0 +1,27 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.task_block{
+    background-color: beige;
+    border: 2px solid blue;
+    padding: 20px;
+    margin: 5px;
+}
+
+input[type="submit"], .btn, .select, h3, p, .form-control, label, .submit{
+    margin: 5px;
+}
+
+.auth_page h3{
+    margin-top: 20px;
+}
+
+.btn-auth{
+    margin-top: 20px;
+}
+
+.new-form{
+    margin-bottom: 30px;
+}

@@ -21,6 +21,9 @@ switch ($params[0])
     case 'main':
         $controller = new C_Index();
         break;
+    case 'auth':
+        $controller = new C_Auth();
+        break;
     default:
         $controller = new C_Index();
         break;

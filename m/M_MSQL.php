@@ -102,12 +102,13 @@ class M_MSQL
 	// $object 		- ассоциативный массив с парами вида "имя столбца - значение"
 	// $where		- условие (часть SQL запроса)
 	// результат	- число измененных строк
-	//	
-	public function Update($table, $object, $where)
+	//
+    
+    public function Update($table, $object, $where)
 	{
 		$sets = array();
 	
-		/*foreach ($object as $key => $value)
+		foreach ($object as $key => $value)
 		{
 			$key = mysqli_real_escape_string($this->db, $key . '');
 			
@@ -122,8 +123,8 @@ class M_MSQL
 			}			
 		}
 		
-		$sets_s = implode(',', $sets);*/			
-		$query = "UPDATE $table SET $object WHERE $where";
+		$sets_s = implode(',', $sets);			
+		$query = "UPDATE $table SET $sets_s WHERE $where";
         //print_r($query);
 		$result = mysqli_query($this->db, $query);
 		

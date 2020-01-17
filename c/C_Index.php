@@ -42,17 +42,19 @@ class C_Index extends C_Base
                         $author = $task['name'];
                         $mail = $task['e-mail'];
                         $text = $task['text'];
+                        $id = $task['id'];
+                        $status = $task['status'];
                         if ($task['status'] == 1)
-                            $status = "Не просмотрено администратором";
+                            $textstatus = "Не просмотрено администратором";
                         else if ($task['status'] == 2)
-                            $status = "Отредактировано администратором";
+                            $textstatus = "Отредактировано администратором";
                         else if ($task['status'] == 3)
-                            $status = "Выполнено";
+                            $textstatus = "Выполнено";
                         require('v/v_task.php');
                     }
                 }
                 for ($ik = 1; $ik < $i / $this->col_tasks_on_page + 1; $ik++){
-                    print_r('<button class="page_button" id="'.$ik.'">'.$ik.'</button>');
+                    print_r('<button class="page_button btn btn-primary" id="'.$ik.'">'.$ik.'</button>');
                 }
             $index_content = ob_get_clean();
             require('v/v_index.php');

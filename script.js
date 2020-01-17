@@ -4,7 +4,7 @@ function changePage(){
       type: "POST",
       data: "page_num="+id,
       success: function(msg){
-        location.href = '/';
+        location.href = '../';
       }
     });
 }
@@ -40,4 +40,18 @@ $("#create_task").click( function(event){
         return false;
     }
     alert("Задача успешно добавлена!");
+});
+
+$("#auth_button").click( function(){
+    location.href='../auth/login';
+});
+
+$("#logout_button").click( function(){
+    $.ajax({
+      type: "POST",
+      data: "account_exit=true",
+      success: function(msg){
+        location.href = '../';
+      }
+    });
 });

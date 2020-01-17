@@ -44,6 +44,9 @@ abstract class C_Base extends C_Controller
     
     // Обработчик данных, пришедших в POST-запросе от script.js
     private function post_method_handler(){
+        
+        $filter = array("<", ">");
+        
         if($this->isPost())
 		{
             if($_POST['sorting']){
@@ -66,18 +69,44 @@ abstract class C_Base extends C_Controller
                         break;
                 }
                 setcookie("postfix", $postfix, time()+3600, '/');
-                $this->redirect('/');
+                $this->redirect('../');
             }
             if($_POST['addnewtask']){
                 $new_task = array();
-                $new_task['`name`'] = $_POST['author'];
-                $new_task['`e-mail`'] = $_POST['email'];
-                $new_task['`text`'] = $_POST['text'];
+                $new_task['`name`'] = str_replace ($filter, "|", $_POST['author']);
+                $new_task['`e-mail`'] = str_replace ($filter, "|", $_POST['email']);
+                $new_task['`text`'] = str_replace ($filter, "|", $_POST['text']);
                 $new_task['`status`'] = 1;
                 $this->msql->Insert('tasks', $new_task);
             }
+            if($_POST['modifytask']){
+                if(! is_null($this->muser->id_user)){
+                    $modif_task = array();
+                    $modif_task['`text`'] = str_replace ($filter, "|", $_POST['text']);
+                    $modif_task['`status`'] = $_POST['status'];
+                    $this->msql->Update('tasks', $modif_task, "`id` = '".$_POST['id']."'");
+                }
+                else{
+                    $this->redirect('../auth/login');
+                }
+            }
             if($_POST['page_num']){
                 setcookie("pageNum", $_POST['page_num'], time()+15, '/');
+            }
+            if($_POST['login']){
+                $auth_done = $this->muser->log_in($_POST['auth_login'], md5($_POST['auth_password']));
+                if ($auth_done){
+                    $this->redirect('../index/index');
+                } else {
+                    print_r("<h3 align='center'>Неверный логин или пароль!</h3>");
+                }
+            }
+            if($_POST['account_exit']){
+                $this->muser->id_user = null;
+                $this->muser->user_role = null;
+                $this->muser->user_name = null;
+                setcookie("userLogin", '', time()-86400, '/');
+                setcookie("userPassword", '', time()-86400, '/');
             }
 		}
     }
